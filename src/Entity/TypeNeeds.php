@@ -22,6 +22,11 @@ class TypeNeeds
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="typeNeeds")
+     */
+    private $activity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,18 @@ class TypeNeeds
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(?Activity $activity): self
+    {
+        $this->activity = $activity;
 
         return $this;
     }

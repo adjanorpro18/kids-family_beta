@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ActivityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,6 +50,16 @@ class Activity
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TypeNeeds::class, mappedBy="activity")
+     */
+    private $typeNeeds;
+
+    public function __construct()
+    {
+        $this->typeNeeds = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -127,6 +139,36 @@ class Activity
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TypeNeeds[]
+     */
+    public function getTypeNeeds(): Collection
+    {
+        return $this->typeNeeds;
+    }
+
+    public function addTypeNeed(TypeNeeds $typeNeed): self
+    {
+        if (!$this->typeNeeds->contains($typeNeed)) {
+            $this->typeNeeds[] = $typeNeed;
+            $typeNeed->setActivity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeNeed(TypeNeeds $typeNeed): self
+    {
+        if ($this->typeNeeds->removeElement($typeNeed)) {
+            // set the owning side to null (unless already changed)
+            if ($typeNeed->getActivity() === $this) {
+                $typeNeed->setActivity(null);
+            }
+        }
 
         return $this;
     }
