@@ -32,6 +32,11 @@ class Activity
      */
     private $createAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity=TypeActivity::class, mappedBy="activity", cascade={"persist", "remove"})
+     */
+    private $typeActivity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,23 @@ class Activity
     public function setCreateAt(\DateTimeInterface $createAt): self
     {
         $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getTypeActivity(): ?TypeActivity
+    {
+        return $this->typeActivity;
+    }
+
+    public function setTypeActivity(TypeActivity $typeActivity): self
+    {
+        // set the owning side of the relation if necessary
+        if ($typeActivity->getActivity() !== $this) {
+            $typeActivity->setActivity($this);
+        }
+
+        $this->typeActivity = $typeActivity;
 
         return $this;
     }

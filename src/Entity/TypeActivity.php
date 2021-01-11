@@ -22,6 +22,12 @@ class TypeActivity
      */
     private $name;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Activity::class, inversedBy="typeActivity", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $activity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +41,18 @@ class TypeActivity
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(Activity $activity): self
+    {
+        $this->activity = $activity;
 
         return $this;
     }
