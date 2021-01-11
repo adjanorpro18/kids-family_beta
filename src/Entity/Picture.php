@@ -27,6 +27,12 @@ class Picture
      */
     private $file;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="pictures")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $activity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class Picture
     public function setFile($file): self
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(?Activity $activity): self
+    {
+        $this->activity = $activity;
 
         return $this;
     }
