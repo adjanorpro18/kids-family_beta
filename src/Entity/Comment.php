@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +39,22 @@ class Comment
      * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="comments")
      */
     private $activity;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $comment;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="comment", orphanRemoval=true)
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -87,6 +105,48 @@ class Comment
     public function setActivity(?Activity $activity): self
     {
         $this->activity = $activity;
+
+        return $this;
+    }
+
+    public function getComment(): ?self
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?self $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(self $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(self $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getComment() === $this) {
+                $comment->setComment(null);
+            }
+        }
 
         return $this;
     }
