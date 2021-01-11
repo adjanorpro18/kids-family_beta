@@ -33,6 +33,11 @@ class Comment
      */
     private $User;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="comments")
+     */
+    private $activity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,18 @@ class Comment
     public function setUser(?User $User): self
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(?Activity $activity): self
+    {
+        $this->activity = $activity;
 
         return $this;
     }
