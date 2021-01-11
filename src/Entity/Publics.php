@@ -22,6 +22,11 @@ class Publics
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Activity::class, inversedBy="publics")
+     */
+    private $activity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,18 @@ class Publics
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(?Activity $activity): self
+    {
+        $this->activity = $activity;
 
         return $this;
     }

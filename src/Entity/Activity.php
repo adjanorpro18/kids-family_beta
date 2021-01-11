@@ -66,10 +66,16 @@ class Activity
      */
     private $pictures;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Publics::class, mappedBy="activity")
+     */
+    private $publics;
+
     public function __construct()
     {
         $this->typeNeeds = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+        $this->publics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,6 +226,36 @@ class Activity
             // set the owning side to null (unless already changed)
             if ($picture->getActivity() === $this) {
                 $picture->setActivity(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Publics[]
+     */
+    public function getPublics(): Collection
+    {
+        return $this->publics;
+    }
+
+    public function addPublic(Publics $public): self
+    {
+        if (!$this->publics->contains($public)) {
+            $this->publics[] = $public;
+            $public->setActivity($this);
+        }
+
+        return $this;
+    }
+
+    public function removePublic(Publics $public): self
+    {
+        if ($this->publics->removeElement($public)) {
+            // set the owning side to null (unless already changed)
+            if ($public->getActivity() === $this) {
+                $public->setActivity(null);
             }
         }
 
