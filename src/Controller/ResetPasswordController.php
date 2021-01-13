@@ -28,7 +28,7 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Requête pour réinitilaiser le mot de passe
-     * @Route("", name="password_request")
+     * @Route("/request", name="password_request")
      */
     public function request(Request $request, UserRepository $userRepository): Response
     {

@@ -1,21 +1,90 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Enregistrement</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #353c46;
+    }
 
-{% block title %}Register{% endblock %}
+    li {
+        float: left;
+    }
 
-{% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
 
-    <h1>Register</h1>
+    li a:hover:not(.active) {
+        background-color: #008e94;
+    }
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    .active {
+        background-color: #70b7ff;
+    }
+</style>
+</head>
+<body>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-{% endblock %}
+<ul>
+    <li><a class="active" href="#home">Accueil</a></li>
+    <li><a href="#apropos">A propos</a></li>
+    <li><a href="#publications">Les publications</a></li>
+    <li><a href="#map">La carte</a></li>
+    <li><a href="#inscription">S'inscrire</a></li>
+    <li><a href="#conection">Se connecter</a></li>
+</ul>
+
+</body>
+<body>
+
+<div class="container">
+    <h1>S'inscrire</h1>
+    <h4>Vous avez déjà un compte? S'identifier</h4>
+
+    <form class="form-horizontal" action="/action_page.php">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Email:</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="pwd">Mot de passe:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="pwd" placeholder="Mot de passe" name="pwd">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="remember"> J'accepte les termes du contrat</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Valider</button>
+                <h5>*En vous inscrivant, vous acceptez nos conditions d'utilisation. Vous acceptez de recevoir des e-mails, et reconnaissez avoir lu notre politique de confidentialité. Vous reconnaissez également que Kids&Family utilise des cookies pour vous offrir la meilleure expérience utilisateur.
+                </h5>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
